@@ -1,0 +1,247 @@
+
+MySQL QUERIES TIENDA
+
+
+
+1.nombres de producto
+ 
+SELECT producto.nombre FROM tienda.producto;
+
+
+
+2. nombres y precios de producto
+
+SELECT producto.nombre, producto.precio FROM tienda.producto;
+
+
+
+3.todas las columns
+
+SELECT * FROM tienda.producto;
+
+
+
+4.nombre, precio en € y $ con alias
+
+SELECT nombre, precio, CAST(precio*1.08 AS DECIMAL (6,2)) FROM tienda.producto;
+
+
+
+5.nombre, precio en € y $ con alias
+
+SELECT nombre, precio AS 'precio en euros', CAST(precio*1.08 AS DECIMAL (6,2)) AS 'precio en Dolares' FROM tienda.producto;
+
+
+
+6.nombres en mayusculas y precios
+
+SELECT UPPER(nombre) AS 'nombre', precio AS 'precio en euros', CAST(precio*1.08 AS DECIMAL (6,2)) AS 'precio en Dolares' FROM tienda.producto;
+
+
+
+7.nombres en minusculas y precios
+
+SELECT LOWER(nombre) AS 'nombre', precio AS 'precio en euros', CAST(precio*1.08 AS DECIMAL (6,2)) AS 'precio en Dolares' FROM tienda.producto;
+
+
+
+8.nombre fabricante y 2 iniciales
+
+SELECT fabricante.nombre,UPPER(SUBSTR(fabricante.nombre, 1, 2)) as Iniciales FROM tienda.fabricante;
+
+
+
+9.nombre y precio productos redondeado
+
+SELECT LOWER(nombre) AS 'nombre', ROUND(precio,1) AS 'precio en Euros', ROUND(precio*1.08,1) AS 'precio en Dolares' FROM tienda.producto;
+
+
+
+10.nombre y precios sin decimales
+
+SELECT LOWER(nombre) AS 'nombre', ROUND(precio) AS 'precio en Euros', ROUND(precio*1.08) AS 'precio en Dolares' FROM tienda.producto;
+
+
+
+11.codigo de fabricantes con productos en la tabla
+
+SELECT fabricante.codigo AS 'Codigo Proveedor' FROM tienda.fabricante JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
+
+
+
+12.codigo de fabricantes con productos en la tabla sin repeticiones
+
+SELECT DISTINCT fabricante.codigo AS 'Codigo Proveedor' FROM tienda.fabricante JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
+
+
+
+13.nombres en orden alfabetico
+
+SELECT fabricante.nombre AS 'Nombre A-Z' FROM tienda.fabricante ORDER BY fabricante.nombre;
+
+
+
+14.nombres en orden alfabetico descendiente
+
+SELECT fabricante.nombre AS 'Nombre Z-A' FROM tienda.fabricante ORDER BY fabricante.nombre DESC;
+
+
+
+15.nombres en orden alfabetico, precios de menos a mas
+
+SELECT producto.nombre AS 'Nombres A-Z', producto.precio AS 'Precios de menos a mas' FROM producto ORDER BY nombre, precio DESC;
+
+
+
+16.5 primeras posiciones de fabricante
+
+SELECT * FROM tienda.fabricante LIMIT 5;
+
+
+
+17.las 2 filas a partir de la 4
+
+SELECT * FROM tienda.fabricante LIMIT 2 OFFSET 3;
+
+
+
+18.el producto mas barato
+
+SELECT producto.nombre, producto.precio FROM tienda.producto ORDER BY producto.precio LIMIT 1;
+
+
+
+19.el producto mas caro
+
+SELECT producto.nombre, producto.precio FROM tienda.producto ORDER BY producto.precio DESC LIMIT 1;
+
+
+
+20.productos del fabricante num 2
+
+SELECT producto.nombre AS 'Productos del fabricante 2' FROM tienda.producto WHERE codigo_fabricante = 2;
+
+
+
+21.lista de productos, precio y fabricante
+
+SELECT producto.nombre AS 'Producto', producto.precio AS '€', fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo;
+
+
+
+22.lista de productos, precio y fabricante orden alfabetico fabricante
+
+SELECT producto.nombre AS 'Producto', producto.precio AS '€', fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo ORDER BY fabricante.nombre;
+
+
+
+23.Lista de codigos y nombres 
+
+SELECT producto.nombre AS 'Producto', producto.codigo AS 'Num_Ref_Producto', fabricante.nombre AS 'Fabricante', producto.codigo_fabricante FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo;
+
+
+
+24.info del producto mas barato
+
+SELECT producto.nombre AS 'Producto', producto.precio AS '€', fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo ORDER BY producto.precio LIMIT 1;
+
+
+
+25.info del producto mas caro
+
+SELECT producto.nombre AS 'Producto', producto.precio AS '€', fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo ORDER BY producto.precio DESC LIMIT 1;
+
+
+
+26.todos los productos de LENOVO
+
+SELECT producto.nombre AS 'Productos de Lenovo' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo AND fabricante.nombre = 'Lenovo';
+
+
+
+27.productos de Crucial mas caros de 200€
+
+SELECT producto.nombre AS 'Productos de Crucial +200€' FROM tienda.producto JOIN tienda.fabricante WHERE codigo_fabricante = fabricante.codigo AND fabricante.nombre = 'Crucial' AND producto.precio > 200;
+
+
+
+28.todos los productos de ASUS,HEWLETT y SEAGATE
+
+SELECT producto.nombre AS 'Productos' , fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus' OR fabricante.nombre = 'Hewlett-Packard' OR fabricante.nombre = 'Seagate';
+
+
+
+29.el ex 28 usando operador IN
+
+SELECT producto.nombre AS 'Productos' , fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre IN ('Asus', 'Hewlett-Packard', 'Seagate');
+
+
+
+30.productos con el nombre de fabricante acabado en "e"
+
+SELECT producto.nombre AS 'Productos' , producto.precio AS 'Preio en €' FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE '%e';
+
+
+
+31.productos donde el fabricante tiene una "W" en su nombre
+
+SELECT producto.nombre AS 'Productos' , producto.precio AS 'Preio en €' FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE '%w%';
+
+
+
+32.precios de igual o mas de 180 ordenados desc, nombre producto ascendente y nombre de fabricante
+
+SELECT producto.precio AS 'Preio en € (Orden descendente)', producto.nombre AS 'Productos (A-Z)', fabricante.nombre AS 'Fabricante' FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE producto.precio >= 180 ORDER BY 1 DESC, 2 ASC;
+
+
+
+33.codigo de fabricante y nombre fabricante de los productos en la base de datos
+
+SELECT DISTINCT fabricante.codigo AS 'Codigo de Fabricante', fabricante.nombre AS 'Fabricante' FROM tienda.fabricante JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
+
+
+
+34.listado de todos los fabricantes y los productos que tiene cada uno
+
+SELECT DISTINCT fabricante.nombre AS 'Fabricante', producto.nombre AS 'Productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
+
+
+35. fabricantes sin producto
+
+SELECT DISTINCT fabricante.nombre AS 'Fabricantes sin productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo WHERE producto.codigo_fabricante IS NULL;
+
+
+
+36. todos los productos lenovo sin usar INNER JOIN
+
+SELECT DISTINCT producto.nombre AS 'Productos de LENOVO' FROM tienda.producto LEFT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo';
+
+
+37. todos los productos de precio igual al max de lenovo sin usar INNER JOIN
+
+SELECT DISTINCT * FROM tienda.producto WHERE producto.precio = (SELECT producto.precio FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
+
+
+
+38. Producto mas caro de lenovo
+
+SELECT * FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1;
+
+
+
+39. producto mas barato de 'Hewlett-Packard'
+
+SELECT * FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Hewlett-Packard' ORDER BY producto.precio LIMIT 1;
+
+
+
+40. todos los porductos de igual o mas caros que el mas caro de lenovo
+
+SELECT DISTINCT * FROM tienda.producto WHERE producto.precio >= (SELECT producto.precio FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
+
+
+
+41. todos los porductos de asus con un precio por encima de la media
+
+SELECT DISTINCT * FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus' AND producto.precio >= (SELECT AvG(producto.precio) FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus');
+
