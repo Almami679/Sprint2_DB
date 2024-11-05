@@ -59,7 +59,7 @@ SELECT LOWER(nombre) AS 'nombre', ROUND(precio,1) AS 'precio en Euros', ROUND(pr
 
 10.nombre y precios sin decimales
 
-SELECT LOWER(nombre) AS 'nombre', ROUND(precio) AS 'precio en Euros', ROUND(precio*1.08) AS 'precio en Dolares' FROM tienda.producto;
+SELECT LOWER(nombre) AS 'nombre', TRUNCATE(precio, 0) AS 'precio en Euros', TRUNCATE(precio*1.08, 0) AS 'precio en Dolares' FROM tienda.producto;
 
 
 
@@ -197,35 +197,35 @@ SELECT producto.precio AS 'Preio en € (Orden descendente)', producto.nombre AS
 
 33.codigo de fabricante y nombre fabricante de los productos en la base de datos
 
-SELECT DISTINCT fabricante.codigo AS 'Codigo de Fabricante', fabricante.nombre AS 'Fabricante' FROM tienda.fabricante JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
+SELECT fabricante.codigo AS 'Codigo de Fabricante', fabricante.nombre AS 'Fabricante' FROM tienda.fabricante JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
 
 
 
 34.listado de todos los fabricantes y los productos que tiene cada uno
 
-SELECT DISTINCT fabricante.nombre AS 'Fabricante', producto.nombre AS 'Productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
+SELECT fabricante.nombre AS 'Fabricante', producto.nombre AS 'Productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo;
 
 
 35. fabricantes sin producto
 
-SELECT DISTINCT fabricante.nombre AS 'Fabricantes sin productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo WHERE producto.codigo_fabricante IS NULL;
+SELECT fabricante.nombre AS 'Fabricantes sin productos' FROM tienda.fabricante LEFT JOIN tienda.producto ON producto.codigo_fabricante = fabricante.codigo WHERE producto.codigo_fabricante IS NULL;
 
 
 
 36. todos los productos lenovo sin usar INNER JOIN
 
-SELECT DISTINCT producto.nombre AS 'Productos de LENOVO' FROM tienda.producto LEFT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo';
+SELECT producto.nombre AS 'Productos de LENOVO' FROM tienda.producto LEFT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo';
 
 
 37. todos los productos de precio igual al max de lenovo sin usar INNER JOIN
 
-SELECT DISTINCT * FROM tienda.producto WHERE producto.precio = (SELECT producto.precio FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
+SELECT * FROM tienda.producto WHERE producto.precio = (SELECT producto.precio FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
 
 
 
 38. Producto mas caro de lenovo
 
-SELECT * FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1;
+SELECT producto.nombre FROM tienda.producto RIGHT JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1;
 
 
 
@@ -237,11 +237,11 @@ SELECT * FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabrican
 
 40. todos los porductos de igual o mas caros que el mas caro de lenovo
 
-SELECT DISTINCT * FROM tienda.producto WHERE producto.precio >= (SELECT producto.precio FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
+SELECT * FROM tienda.producto WHERE producto.precio >= (SELECT producto.precio FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Lenovo' ORDER BY producto.precio DESC LIMIT 1);
 
 
 
 41. todos los porductos de asus con un precio por encima de la media
 
-SELECT DISTINCT * FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus' AND producto.precio >= (SELECT AvG(producto.precio) FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus');
+SELECT DISTINCT producto.precio FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus' AND producto.precio >= (SELECT AvG(producto.precio) FROM tienda.producto JOIN tienda.fabricante ON producto.codigo_fabricante = fabricante.codigo WHERE fabricante.nombre = 'Asus');
 
