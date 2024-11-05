@@ -1,0 +1,100 @@
+db.createCollection("glasses", {
+  validator: {
+    $jsonSchema: {
+      "bsonType": "object",
+      "title": "glasses",
+      "required": ["leftGrad", "rightGrad", "mount", "price", "color"],
+      "properties": {
+        "bought_by": {
+          "bsonType": "object",
+          "title": "object",
+          "properties": {
+            "client": {
+              "bsonType": "object",
+              "title": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "bsonType": "string"
+                },
+                "data": {
+                  "bsonType": "object",
+                  "title": "object",
+                  "required": ["adress1", "phone1", "dateRegistred1"],
+                  "properties": {
+                    "adress1": {
+                      "bsonType": "string"
+                    },
+                    "phone1": {
+                      "bsonType": "string"
+                    },
+                    "email": {
+                      "bsonType": "string"
+                    },
+                    "dateRegistred1": {
+                      "bsonType": "date"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "brand": {
+          "bsonType": "object",
+          "title": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "bsonType": "string"
+            },
+            "supplier": {
+              "bsonType": "object",
+              "title": "object",
+              "required": ["name1", "adress", "phone", "nif"],
+              "properties": {
+                "name1": {
+                  "bsonType": "string"
+                },
+                "adress": {
+                  "bsonType": "string"
+                },
+                "phone": {
+                  "bsonType": "string"
+                },
+                "fax": {
+                  "bsonType": "string"
+                },
+                "nif": {
+                  "bsonType": "string"
+                }
+              }
+            }
+          }
+        },
+        "leftGrad": {
+          "bsonType": "decimal"
+        },
+        "rightGrad": {
+          "bsonType": "decimal"
+        },
+        "mount": {
+          "enum": ["flotante", " pasta", " metalica"]
+        },
+        "leftGlassColor": {
+          "bsonType": "string"
+        },
+        "rightGlassColor": {
+          "bsonType": "string"
+        },
+        "price": {
+          "bsonType": "decimal"
+        },
+        "color": {
+          "bsonType": "string"
+        }
+      }
+    }
+  }
+});
+Generated: 5 / 11 / 2024 | 11: 58: 28 by Moon Modeler - www.datensen.com

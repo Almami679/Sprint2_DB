@@ -1,0 +1,221 @@
+db.createCollection("video", {
+  validator: {
+    $jsonSchema: {
+      "bsonType": "object",
+      "title": "video",
+      "required": ["status", "tags", "published_at", "title", "info", "size", "file_name", "time_last", "thumbnail", "reporductions", "likes", "dislikes", "user"],
+      "properties": {
+        "status": {
+          "enum": ["public", "private", "hidden"]
+        },
+        "tags": {
+          "bsonType": "array",
+          "items": {
+            "bsonType": "string"
+          }
+        },
+        "published_at": {
+          "bsonType": "date"
+        },
+        "title": {
+          "bsonType": "string"
+        },
+        "info": {
+          "bsonType": "string"
+        },
+        "size": {
+          "bsonType": "string"
+        },
+        "file_name": {
+          "bsonType": "string"
+        },
+        "time_last": {
+          "bsonType": "string"
+        },
+        "thumbnail": {
+          "bsonType": "string"
+        },
+        "reporductions": {
+          "bsonType": "int"
+        },
+        "likes": {
+          "bsonType": "int"
+        },
+        "dislikes": {
+          "bsonType": "int"
+        },
+        "likes": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["make_at", "user"],
+            "properties": {
+              "make_at": {
+                "bsonType": "date"
+              },
+              "user": {
+                "bsonType": "object",
+                "title": "object"
+              }
+            }
+          }
+        },
+        "dislikes": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["make_at", "user"],
+            "properties": {
+              "make_at": {
+                "bsonType": "date"
+              },
+              "user": {
+                "bsonType": "object",
+                "title": "object"
+              }
+            }
+          }
+        },
+        "comments": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["text", "date", "make_us"],
+            "properties": {
+              "text": {
+                "bsonType": "string"
+              },
+              "date": {
+                "bsonType": "date"
+              },
+              "make_us": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "bsonType": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "user": {
+          "bsonType": "object",
+          "title": "object",
+          "required": ["email", "pass", "name", "channel"],
+          "properties": {
+            "email": {
+              "bsonType": "string"
+            },
+            "pass": {
+              "bsonType": "string"
+            },
+            "name": {
+              "bsonType": "string"
+            },
+            "data": {
+              "bsonType": "object",
+              "title": "object",
+              "required": ["born_date", "country", "cp"],
+              "properties": {
+                "born_date": {
+                  "bsonType": "date"
+                },
+                "sex": {
+                  "enum": ["male", "female", "binary"]
+                },
+                "country": {
+                  "bsonType": "string"
+                },
+                "cp": {
+                  "bsonType": "string"
+                }
+              }
+            },
+            "channel": {
+              "bsonType": "object",
+              "title": "object",
+              "required": ["name", "info", "create_at", "video"],
+              "properties": {
+                "name": {
+                  "bsonType": "string"
+                },
+                "info": {
+                  "bsonType": "string"
+                },
+                "create_at": {
+                  "bsonType": "date"
+                },
+                "video": {
+                  "bsonType": "array",
+                  "items": {
+                    "title": "object"
+                  }
+                }
+              }
+            },
+            "subs": {
+              "bsonType": "array",
+              "items": {
+                "title": "object",
+                "required": ["user"],
+                "properties": {
+                  "user": {
+                    "bsonType": "object",
+                    "title": "object",
+                    "required": ["name"],
+                    "properties": {
+                      "name": {
+                        "bsonType": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "sub_as": {
+              "bsonType": "array",
+              "items": {
+                "title": "object",
+                "required": ["channel"],
+                "properties": {
+                  "channel": {
+                    "bsonType": "object",
+                    "title": "object",
+                    "required": ["name"],
+                    "properties": {
+                      "name": {
+                        "bsonType": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "playlists": {
+              "bsonType": "array",
+              "items": {
+                "title": "object",
+                "required": ["status", "create_at", "title"],
+                "properties": {
+                  "status": {
+                    "enum": ["public", "private"]
+                  },
+                  "create_at": {
+                    "bsonType": "date"
+                  },
+                  "title": {
+                    "bsonType": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+Generated: 5 / 11 / 2024 | 13: 43: 01 by Moon Modeler - www.datensen.com

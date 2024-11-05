@@ -1,0 +1,280 @@
+db.createCollection("shop", {
+  validator: {
+    $jsonSchema: {
+      "bsonType": "object",
+      "title": "shop",
+      "required": ["_Id"],
+      "properties": {
+        "_Id": {
+          "bsonType": "objectId"
+        },
+        "data": {
+          "bsonType": "object",
+          "title": "object",
+          "required": ["adress", "phone"],
+          "properties": {
+            "adress": {
+              "bsonType": "string"
+            },
+            "phone": {
+              "bsonType": "string"
+            }
+          }
+        },
+        "staff": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "properties": {
+              "chef": {
+                "bsonType": "array",
+                "items": {
+                  "title": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "bsonType": "object",
+                      "title": "object",
+                      "required": ["name", "lastName", "nif", "phone"],
+                      "properties": {
+                        "name": {
+                          "bsonType": "string"
+                        },
+                        "lastName": {
+                          "bsonType": "string"
+                        },
+                        "nif": {
+                          "bsonType": "string"
+                        },
+                        "phone": {
+                          "bsonType": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "ryder": {
+                "bsonType": "array",
+                "items": {
+                  "title": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "bsonType": "object",
+                      "title": "object",
+                      "required": ["name", "lastName", "nif", "phone"],
+                      "properties": {
+                        "name": {
+                          "bsonType": "string"
+                        },
+                        "lastName": {
+                          "bsonType": "string"
+                        },
+                        "nif": {
+                          "bsonType": "string"
+                        },
+                        "phone": {
+                          "bsonType": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "order": {
+          "bsonType": "array",
+          "items": {
+            "title": "object",
+            "required": ["_idOrder", "delivered_adress"],
+            "properties": {
+              "client": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["data"],
+                "properties": {
+                  "data": {
+                    "bsonType": "object",
+                    "title": "object",
+                    "required": ["name", "lastName", "adress", "phone"],
+                    "properties": {
+                      "name": {
+                        "bsonType": "string"
+                      },
+                      "lastName": {
+                        "bsonType": "string"
+                      },
+                      "adress": {
+                        "bsonType": "object",
+                        "title": "object",
+                        "required": ["street", "num", "cp", "city", "province"],
+                        "properties": {
+                          "street": {
+                            "bsonType": "string"
+                          },
+                          "num": {
+                            "bsonType": "string"
+                          },
+                          "floor": {
+                            "bsonType": "string"
+                          },
+                          "cp": {
+                            "bsonType": "string"
+                          },
+                          "city": {
+                            "bsonType": "string"
+                          },
+                          "province": {
+                            "bsonType": "string"
+                          }
+                        }
+                      },
+                      "phone": {
+                        "bsonType": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "products": {
+                "bsonType": "array",
+                "items": {
+                  "title": "object",
+                  "properties": {
+                    "hamburguer": {
+                      "bsonType": "array",
+                      "items": {
+                        "title": "object",
+                        "required": ["name", "price"],
+                        "properties": {
+                          "name": {
+                            "bsonType": "string"
+                          },
+                          "info": {
+                            "bsonType": "string"
+                          },
+                          "img": {
+                            "bsonType": "string"
+                          },
+                          "price": {
+                            "bsonType": "decimal"
+                          }
+                        }
+                      }
+                    },
+                    "drink": {
+                      "bsonType": "array",
+                      "items": {
+                        "title": "object",
+                        "required": ["price", "name"],
+                        "properties": {
+                          "img": {
+                            "bsonType": "string"
+                          },
+                          "price": {
+                            "bsonType": "decimal"
+                          },
+                          "info": {
+                            "bsonType": "string"
+                          },
+                          "name": {
+                            "bsonType": "string"
+                          }
+                        }
+                      }
+                    },
+                    "pizza": {
+                      "bsonType": "array",
+                      "items": {
+                        "title": "object",
+                        "required": ["price", "name", "category"],
+                        "properties": {
+                          "img": {
+                            "bsonType": "string"
+                          },
+                          "price": {
+                            "bsonType": "decimal"
+                          },
+                          "info": {
+                            "bsonType": "string"
+                          },
+                          "name": {
+                            "bsonType": "string"
+                          },
+                          "category": {
+                            "enum": ["offer", "premium", "classic"]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "_idOrder": {
+                "bsonType": "objectId"
+              },
+              "total_price": {
+                "bsonType": "decimal"
+              },
+              "delivered_adress": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["street", "num", "cp", "city", "province"],
+                "properties": {
+                  "street": {
+                    "bsonType": "string"
+                  },
+                  "num": {
+                    "bsonType": "string"
+                  },
+                  "floor": {
+                    "bsonType": "string"
+                  },
+                  "cp": {
+                    "bsonType": "string"
+                  },
+                  "city": {
+                    "bsonType": "string"
+                  },
+                  "province": {
+                    "bsonType": "string"
+                  }
+                }
+              },
+              "ryder": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["data"],
+                "properties": {
+                  "data": {
+                    "bsonType": "object",
+                    "title": "object",
+                    "required": ["name", "lastName", "nif", "phone"],
+                    "properties": {
+                      "name": {
+                        "bsonType": "string"
+                      },
+                      "lastName": {
+                        "bsonType": "string"
+                      },
+                      "nif": {
+                        "bsonType": "string"
+                      },
+                      "phone": {
+                        "bsonType": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+Generated: 5 / 11 / 2024 | 12: 37: 18 by Moon Modeler - www.datensen.com
