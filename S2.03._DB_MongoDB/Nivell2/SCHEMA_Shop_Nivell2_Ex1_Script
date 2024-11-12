@@ -8,7 +8,7 @@ db.createCollection("shop", {
         "_Id": {
           "bsonType": "objectId"
         },
-        "data": {
+        "info": {
           "bsonType": "object",
           "title": "object",
           "required": ["adress", "phone"],
@@ -25,60 +25,30 @@ db.createCollection("shop", {
           "bsonType": "array",
           "items": {
             "title": "object",
+            "required": ["enploye_info"],
             "properties": {
-              "chef": {
+              "rol": {
                 "bsonType": "array",
                 "items": {
-                  "title": "object",
-                  "required": ["data"],
-                  "properties": {
-                    "data": {
-                      "bsonType": "object",
-                      "title": "object",
-                      "required": ["name", "lastName", "nif", "phone"],
-                      "properties": {
-                        "name": {
-                          "bsonType": "string"
-                        },
-                        "lastName": {
-                          "bsonType": "string"
-                        },
-                        "nif": {
-                          "bsonType": "string"
-                        },
-                        "phone": {
-                          "bsonType": "string"
-                        }
-                      }
-                    }
-                  }
+                  "enum": ["chef", "ryder"]
                 }
               },
-              "ryder": {
-                "bsonType": "array",
-                "items": {
-                  "title": "object",
-                  "required": ["data"],
-                  "properties": {
-                    "data": {
-                      "bsonType": "object",
-                      "title": "object",
-                      "required": ["name", "lastName", "nif", "phone"],
-                      "properties": {
-                        "name": {
-                          "bsonType": "string"
-                        },
-                        "lastName": {
-                          "bsonType": "string"
-                        },
-                        "nif": {
-                          "bsonType": "string"
-                        },
-                        "phone": {
-                          "bsonType": "string"
-                        }
-                      }
-                    }
+              "enploye_info": {
+                "bsonType": "object",
+                "title": "object",
+                "required": ["name", "lastName", "nif", "phone"],
+                "properties": {
+                  "name": {
+                    "bsonType": "string"
+                  },
+                  "lastName": {
+                    "bsonType": "string"
+                  },
+                  "nif": {
+                    "bsonType": "string"
+                  },
+                  "phone": {
+                    "bsonType": "string"
                   }
                 }
               }
@@ -89,14 +59,14 @@ db.createCollection("shop", {
           "bsonType": "array",
           "items": {
             "title": "object",
-            "required": ["_idOrder", "delivered_adress"],
+            "required": ["_idOrder", "delivered_adress", "ryder_id"],
             "properties": {
               "client": {
                 "bsonType": "object",
                 "title": "object",
-                "required": ["data"],
+                "required": ["client_info"],
                 "properties": {
-                  "data": {
+                  "client_info": {
                     "bsonType": "object",
                     "title": "object",
                     "required": ["name", "lastName", "adress", "phone"],
@@ -244,31 +214,8 @@ db.createCollection("shop", {
                   }
                 }
               },
-              "ryder": {
-                "bsonType": "object",
-                "title": "object",
-                "required": ["data"],
-                "properties": {
-                  "data": {
-                    "bsonType": "object",
-                    "title": "object",
-                    "required": ["name", "lastName", "nif", "phone"],
-                    "properties": {
-                      "name": {
-                        "bsonType": "string"
-                      },
-                      "lastName": {
-                        "bsonType": "string"
-                      },
-                      "nif": {
-                        "bsonType": "string"
-                      },
-                      "phone": {
-                        "bsonType": "string"
-                      }
-                    }
-                  }
-                }
+              "ryder_id": {
+                "bsonType": "int"
               }
             }
           }
@@ -277,4 +224,3 @@ db.createCollection("shop", {
     }
   }
 });
-Generated: 5 / 11 / 2024 | 12: 37: 18 by Moon Modeler - www.datensen.com

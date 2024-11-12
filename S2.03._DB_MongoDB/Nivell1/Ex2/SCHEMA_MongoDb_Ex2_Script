@@ -8,33 +8,30 @@ db.createCollection("glasses", {
         "bought_by": {
           "bsonType": "object",
           "title": "object",
+          "required": ["name"],
           "properties": {
-            "client": {
+            "name": {
+              "bsonType": "string"
+            },
+            "client_info": {
               "bsonType": "object",
               "title": "object",
-              "required": ["name"],
+              "required": ["adress", "phone", "dateRegistred"],
               "properties": {
-                "name": {
+                "adress": {
                   "bsonType": "string"
                 },
-                "data": {
-                  "bsonType": "object",
-                  "title": "object",
-                  "required": ["adress1", "phone1", "dateRegistred1"],
-                  "properties": {
-                    "adress1": {
-                      "bsonType": "string"
-                    },
-                    "phone1": {
-                      "bsonType": "string"
-                    },
-                    "email": {
-                      "bsonType": "string"
-                    },
-                    "dateRegistred1": {
-                      "bsonType": "date"
-                    }
-                  }
+                "phone": {
+                  "bsonType": "string"
+                },
+                "email": {
+                  "bsonType": "string"
+                },
+                "dateRegistred": {
+                  "bsonType": "date"
+                },
+                "recomended_by": {
+                  "bsonType": "int"
                 }
               }
             }
@@ -48,27 +45,8 @@ db.createCollection("glasses", {
             "name": {
               "bsonType": "string"
             },
-            "supplier": {
-              "bsonType": "object",
-              "title": "object",
-              "required": ["name1", "adress", "phone", "nif"],
-              "properties": {
-                "name1": {
-                  "bsonType": "string"
-                },
-                "adress": {
-                  "bsonType": "string"
-                },
-                "phone": {
-                  "bsonType": "string"
-                },
-                "fax": {
-                  "bsonType": "string"
-                },
-                "nif": {
-                  "bsonType": "string"
-                }
-              }
+            "supplier_id": {
+              "bsonType": "int"
             }
           }
         },
@@ -92,9 +70,31 @@ db.createCollection("glasses", {
         },
         "color": {
           "bsonType": "string"
+        },
+        "supplier": {
+          "bsonType": "object",
+          "title": "object",
+          "required": ["name", "adress", "phone", "nif"],
+          "properties": {
+            "name": {
+              "bsonType": "string"
+            },
+            "adress": {
+              "bsonType": "string"
+            },
+            "phone": {
+              "bsonType": "string"
+            },
+            "fax": {
+              "bsonType": "string"
+            },
+            "nif": {
+              "bsonType": "string"
+            }
+          }
         }
       }
     }
   }
 });
-Generated: 5 / 11 / 2024 | 11: 58: 28 by Moon Modeler - www.datensen.com
+Generated: 12 / 11 / 2024 | 11: 11: 26 by Moon Modeler - www.datensen.com

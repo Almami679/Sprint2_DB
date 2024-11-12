@@ -11,7 +11,7 @@ db.createCollection("clients", {
         "name": {
           "bsonType": "string"
         },
-        "data": {
+        "client_info": {
           "bsonType": "object",
           "title": "object",
           "required": ["adress1", "phone1", "dateRegistred1"],
@@ -33,7 +33,7 @@ db.createCollection("clients", {
         "shoppings": {
           "bsonType": "object",
           "title": "object",
-          "required": ["date"],
+          "required": ["date", "hour"],
           "properties": {
             "date": {
               "bsonType": "date"
@@ -116,11 +116,17 @@ db.createCollection("clients", {
                   "bsonType": "string"
                 }
               }
+            },
+            "hour": {
+              "bsonType": "timestamp"
             }
           }
+        },
+        "referenceBy_id": {
+          "bsonType": "int"
         }
       }
     }
   }
 });
-Generated: 5 / 11 / 2024 | 11: 45: 58 by Moon Modeler - www.datensen.com
+Generated: 12 / 11 / 2024 | 11: 04: 08 by Moon Modeler - www.datensen.com
