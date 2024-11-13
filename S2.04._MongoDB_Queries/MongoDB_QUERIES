@@ -131,19 +131,19 @@ MongoDB QUERIES (Realizadas con Mongo DB SHell)
 
 22. restaurant_id, name, i grades de los restaurantes con grado "A" i un score 11 en el estudio ISODate "2014-08-11T00:00:00Z"
 
-> db.getCollection('restaurants').find({$and : [{'grades.grade' : "A"}, {'grades.score': 11}, {'grades.date': ISODate("2014-08-11")}]}, {restaurant_id: 1, name: 1, grades: 1, _id: 0});
+> db.restaurants.find({"grades":{ $elemMatch:{"grade":"A","score":11,"date":ISODate("2014-08-11T00:00:00Z")}}},{restaurant_id:1, name:1, grades:1});
 
 
 
 23. restaurant_id, name i grades de los restaurantes donde el 2n elemento grades.grade = "A" i score 9 en ISODate "2014-08-11T00:00:00Z".
 
-db.getCollection('restaurants').find({$and : [{'grades.2.grade' : "A"}, {'grades.2.score': 9}, {'grades.2.date': ISODate("2014-08-11")}]}, {restaurant_id: 1, name: 1, grades: 1, _id: 0});
+db.getCollection('restaurants').find({$and : [{'grades.1.grade' : "A"}, {'grades.1.score': 9}, {'grades.1.date': ISODate("2014-08-11")}]}, {restaurant_id: 1, name: 1, grades: 1, _id: 0});
 
 
 
 24. restaurant_id, name, address i coords de los restaurantes donde el 2n elemento address.coord > 42 i < 52
 
-> db.getCollection('restaurants').find({'address.coord.1': {$lte:52, $gte:42}}, {restaurant_id:1, name:1, address: 1, _id:0 });
+> db.getCollection('restaurants').find({'address.coord.1': {$gt:42,$lte:52}}, {restaurant_id:1, name:1, address: 1, _id:0 });
 
 
 
@@ -160,6 +160,12 @@ db.getCollection('restaurants').find({$and : [{'grades.2.grade' : "A"}, {'grades
 
 
 
+27. cocina y barrio en orden ascendente
+
+> db.getCollection('restaurants').find().sort({cuisine: 1, borough: -1});
+
+
+
 28. todos los restaurantes que no tienen calle en el campo address
 
 > db.getCollection('restaurants').find({'address.street': {$exists: false}}, {name: 1, address: 1, _id: 0});
@@ -168,7 +174,7 @@ db.getCollection('restaurants').find({$and : [{'grades.2.grade' : "A"}, {'grades
 
 29. todos los restaurantes donde coord es un valor Double
 
-> db.getCollection('restaurants').find({'address.coord.0': { $type: 'double'},'adress.coord.1': {$type: 'double'}}, {name: 1, address: 1, _id: 0});
+> db.getCollection('restaurants').find({'address.coord.0': { $type: 'double'},'address.coord.1': {$type: 'double'}}, {name: 1, address: 1, _id: 0});
 
 o tambien:
 
